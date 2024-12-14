@@ -26,12 +26,10 @@ public class Main {
         WorkRoleDAO workRoleDAO = new WorkRoleDAOImpl();
         WorkRoleService workRoleService = new WorkRoleService(workRoleDAO);
         Directory directory = new Directory();
-        WorkRole workrole = new WorkRole("Service", "Repairs and maintenance", -18000, "2011-04-05");
+        WorkRole workrole = new WorkRole("Service", "Repairs and maintenance", 18000, "2011-04-05");
         Employee employee = new Employee("Anna", "munk@gmail.com", "femhundra", workrole);
 
         Employee employeeTest = new Employee(null, null, null, null);
-
-
 
         directory.start();
     }

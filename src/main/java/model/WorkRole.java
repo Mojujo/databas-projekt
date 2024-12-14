@@ -60,12 +60,6 @@ public class WorkRole {
 
     @Override
     public String toString() {
-        return "model.WorkRole{" +
-                "roleId=" + roleId +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", salary=" + salary +
-                ", creationDate=" + creationDate +
-                '}';
+        return "\n" + "[" + "RoleId=" + roleId + ", Title= " + title + ", Description= " + description + ", Salary= " + salary + ", Creation-Date= " + creationDate + "]";
     }
 }

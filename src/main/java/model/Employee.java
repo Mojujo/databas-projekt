@@ -76,12 +76,10 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "model.Employee{" +
-                "employeeId=" + employeeId +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", workRole=" + workRole +
-                '}';
+        return "[" + "EmployeeId=" + employeeId +
+                ", Name= " + name +
+                ", Email= " + email +
+                ", Password= " + password + "]" +
+                 workRole;
     }
 }

@@ -70,4 +70,28 @@ public class EmployeeService {
             }
         }
     }
+
+    public void deleteEmployee(int id) {
+        try (Connection conn = JDBCUtil.getConnection()) {
+            employeeDAO.deleteEmployee(id, conn);
+        } catch (SQLException e) {
+            LoggerUtil.logError("Service error deleting employee", e);
+        }
+    }
+
+    public void findEmployee(String email, Employee user) {
+        Employee employee = employeeDAO.getEmployee(email);
+        if (employee != null) {
+            if (user.getWorkRole().getTitle().equals("Admin")) {
+                System.out.println("Admin user, showing all information");
+                System.out.println(employee);
+            } else {
+                System.out.println(
+                        "[" + "Name= " + employee.getName() +
+                                "Email= " + employee.getEmail() +
+                                "Title= " + employee.getWorkRole().getTitle() +
+                                "Salary= " + employee.getWorkRole().getSalary() + "]");
+            }
+        }
+    }
 }

@@ -28,7 +28,7 @@ public class Directory {
     public void start() {
         while (run) {
             if (loggedIn) {
-                run = processInput(user);
+                run = options(user);
             } else {
                 login();
             }
@@ -58,67 +58,27 @@ public class Directory {
         }
     }
 
-    private void options() {
-        if (menuEdit == null) {
-            PrintUtil.optionPrintAdmin();
-            switch (scanner.nextInt()) {
-                case 1 -> {
-                    menuEdit = "role";
-                    System.out.println("Editing roles.");
-                }
-                case 2 -> {
-                    menuEdit = "employee";
-                    System.out.println("Editing employees.");
-                }
-            }
-        }
-    }
-
-    public boolean processInput(Employee user) {
+    private boolean options(Employee user) {
         if (user.getWorkRole().getTitle().equals("Admin")) {
-            options();
-            if (Objects.equals(menuEdit, "role")) {
-                PrintUtil.optionPrintRole();
+            if (menuEdit == null) {
+                PrintUtil.optionPrintAdmin();
                 switch (scanner.nextInt()) {
                     case 1 -> {
+                        menuEdit = "role";
+                        System.out.println("Editing roles.");
+                        processInputRole();
                     }
                     case 2 -> {
-
+                        menuEdit = "employee";
+                        System.out.println("Editing employees.");
+                        processInputEmployee();
                     }
-                    case 3 -> {
-                    }
+                    case 3 -> loggedIn = false;
                     case 4 -> {
-                    }
-                    case 5 -> {
-
-                    }
-                    case 6 -> menuEdit = null;
-
-                    case 7 -> {
-                        return false;
-                    }
-
-                }
-            } else if (Objects.equals(menuEdit, "employee")) {
-                PrintUtil.optionPrintEmployee();
-                switch (scanner.nextInt()) {
-                    case 1 -> {
-                        employeeService.verifyEmployee(createEmployee());
-                    }
-                    case 2 -> {
-                        employeeService.verifyUpdateEmployee(updateEmployee());
-                    }
-                    case 3 -> {
-                    }
-                    case 4 -> {
-                    }
-                    case 5 -> {
-                    }
-                    case 6 -> menuEdit = null;
-                    case 7 -> {
                         return false;
                     }
                 }
+                scanner.nextLine();
             }
         } else {
             PrintUtil.optionPrintProfile();
@@ -126,9 +86,56 @@ public class Directory {
                 case 1 -> {
 
                 }
+                case 2 -> loggedIn = false;
+                case 3 -> {
+                    return false;
+                }
             }
+            scanner.nextLine();
         }
         return true;
+    }
+
+    public void processInputRole() {
+        PrintUtil.optionPrintRole();
+        switch (scanner.nextInt()) {
+            case 1 -> {
+            }
+            case 2 -> {
+
+            }
+            case 3 -> {
+            }
+            case 4 -> {
+            }
+            case 5 -> {
+
+            }
+            case 6 -> menuEdit = null;
+        }
+        scanner.nextLine();
+    }
+
+    public void processInputEmployee() {
+        PrintUtil.optionPrintEmployee();
+        switch (scanner.nextInt()) {
+            case 1 -> employeeService.verifyEmployee(createEmployee());
+
+            case 2 -> employeeService.verifyUpdateEmployee(updateEmployee());
+
+            case 3 -> {
+                System.out.println("Enter employee ID to delete: ");
+                employeeService.deleteEmployee(scanner.nextInt());
+                scanner.nextLine();
+            }
+            case 4 -> {
+                System.out.println("Enter employee email: ");
+
+            }
+            case 5 -> {
+            }
+            case 6 -> menuEdit = null;
+        }
     }
 
     private Employee createEmployee() {

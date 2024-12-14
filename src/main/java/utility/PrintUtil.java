@@ -16,6 +16,8 @@ public class PrintUtil {
                 --------------------
                 1. Edit roles
                 2. Edit employees
+                3. Log out
+                4. Quit
                 --------------------
                 """);
     }
@@ -29,7 +31,6 @@ public class PrintUtil {
                 4. Find role
                 5. List roles
                 6. Go back
-                7. Quit
                 -------------------
                 """);
     }
@@ -43,7 +44,6 @@ public class PrintUtil {
                 4. Find employee
                 5. List employees
                 6. Go back
-                7. Quit
                 -------------------
                 """);
     }
@@ -52,6 +52,8 @@ public class PrintUtil {
         System.out.println("""
                 -------------------
                 1. View profile
+                2. Logout
+                3. Quit
                 -------------------
                 """);
     }
