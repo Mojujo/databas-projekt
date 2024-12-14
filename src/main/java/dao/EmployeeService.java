@@ -88,9 +88,9 @@ public class EmployeeService {
             } else {
                 System.out.println(
                         "[" + "Name= " + employee.getName() +
-                                "Email= " + employee.getEmail() +
-                                "Title= " + employee.getWorkRole().getTitle() +
-                                "Salary= " + employee.getWorkRole().getSalary() + "]");
+                                ", Email= " + employee.getEmail() +
+                                ", Title= " + employee.getWorkRole().getTitle() +
+                                ", Salary= " + employee.getWorkRole().getSalary() + "]");
             }
         }
     }

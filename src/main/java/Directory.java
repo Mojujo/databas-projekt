@@ -130,7 +130,8 @@ public class Directory {
             }
             case 4 -> {
                 System.out.println("Enter employee email: ");
-
+                String email = scanner.nextLine();
+                employeeService.findEmployee(email, user);
             }
             case 5 -> {
             }
