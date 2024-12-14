@@ -28,6 +28,8 @@ public class PrintUtil {
                 3. Delete role
                 4. Find role
                 5. List roles
+                6. Go back
+                7. Quit
                 -------------------
                 """);
     }
@@ -40,6 +42,16 @@ public class PrintUtil {
                 3. Delete employee
                 4. Find employee
                 5. List employees
+                6. Go back
+                7. Quit
+                -------------------
+                """);
+    }
+
+    public static void optionPrintProfile() {
+        System.out.println("""
+                -------------------
+                1. View profile
                 -------------------
                 """);
     }

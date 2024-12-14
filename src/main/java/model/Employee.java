@@ -44,9 +44,22 @@ public class Employee {
         return workRole;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setWorkRole(WorkRole workRole) {
+        this.workRole = workRole;
+    }
+
 
     @Override
     public boolean equals(Object o) {
