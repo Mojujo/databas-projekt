@@ -31,6 +31,6 @@ public class Main {
 
         Employee employeeTest = new Employee(null, null, null, null);
 
-        employeeService.findEmployee("stefan@gmail.com", employee);
+        directory.start();
     }
 }

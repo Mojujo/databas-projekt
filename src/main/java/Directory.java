@@ -7,7 +7,6 @@ import utility.PrintUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Directory {
@@ -22,6 +21,7 @@ public class Directory {
     WorkRole workRole;
 
     String menuEdit;
+    String workTitle;
     Boolean run = true;
     boolean loggedIn = false;
 
@@ -59,89 +59,105 @@ public class Directory {
     }
 
     private boolean options(Employee user) {
-        if (user.getWorkRole().getTitle().equals("Admin")) {
-            if (menuEdit == null) {
+        if (menuEdit == null) {
+            if (user.getWorkRole().getTitle().equals("Admin")) {
                 PrintUtil.optionPrintAdmin();
-                switch (scanner.nextInt()) {
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline character
+
+                switch (choice) {
                     case 1 -> {
                         menuEdit = "role";
                         System.out.println("Editing roles.");
-                        processInputRole();
                     }
                     case 2 -> {
                         menuEdit = "employee";
                         System.out.println("Editing employees.");
-                        processInputEmployee();
                     }
-                    case 3 -> loggedIn = false;
+                    case 3 -> {
+                        loggedIn = false;
+                        return true; // Return to log in
+                    }
                     case 4 -> {
-                        return false;
+                        return false; // Exit the application
                     }
                 }
-                scanner.nextLine();
-            }
-        } else {
-            PrintUtil.optionPrintProfile();
-            switch (scanner.nextInt()) {
-                case 1 -> {
+            } else {
+                PrintUtil.optionPrintProfile();
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline character
 
-                }
-                case 2 -> loggedIn = false;
-                case 3 -> {
-                    return false;
+                switch (choice) {
+                    case 1 -> employeeService.findEmployee(user.getEmail(), user);
+                    case 2 -> {
+                        loggedIn = false;
+                        return true; // Return to log in
+                    }
+                    case 3 -> {
+                        return false; // Exit the application
+                    }
                 }
             }
-            scanner.nextLine();
+        }
+
+        if ("role".equals(menuEdit)) {
+            processInputRole();
+        } else if ("employee".equals(menuEdit)) {
+            processInputEmployee();
         }
         return true;
     }
 
     public void processInputRole() {
         PrintUtil.optionPrintRole();
-        switch (scanner.nextInt()) {
-            case 1 -> {
-            }
-            case 2 -> {
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
 
-            }
+        switch (choice) {
+            case 1 -> workRoleService.verifyWorkRole(createWorkRole());
+
+            case 2 -> workRoleService.verifyUpdateRole(updateWorkRole(), workTitle);
+
             case 3 -> {
+                System.out.println("Enter role ID to delete: ");
+                workRoleService.deleteRole(scanner.nextInt());
+                scanner.nextLine(); // Consume newline character
             }
             case 4 -> {
+                System.out.println("Enter role title: ");
+                workRoleService.findWorkRole(scanner.nextLine(), user);
             }
-            case 5 -> {
+            case 5 -> workRoleService.listAllWorkRoles();
 
-            }
             case 6 -> menuEdit = null;
         }
-        scanner.nextLine();
     }
 
     public void processInputEmployee() {
         PrintUtil.optionPrintEmployee();
-        switch (scanner.nextInt()) {
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        switch (choice) {
             case 1 -> employeeService.verifyEmployee(createEmployee());
 
             case 2 -> employeeService.verifyUpdateEmployee(updateEmployee());
-
             case 3 -> {
                 System.out.println("Enter employee ID to delete: ");
                 employeeService.deleteEmployee(scanner.nextInt());
-                scanner.nextLine();
+                scanner.nextLine(); // Consume newline character
             }
             case 4 -> {
-                System.out.println("Enter employee email: ");
-                String email = scanner.nextLine();
-                employeeService.findEmployee(email, user);
+                System.out.println("Enter employee Email: ");
+                employeeService.findEmployee(scanner.nextLine(), user);
             }
-            case 5 -> {
-            }
+            case 5 -> employeeService.listAllEmployees();
+
             case 6 -> menuEdit = null;
         }
     }
 
     private Employee createEmployee() {
-        scanner.nextLine();
-
         System.out.println("Enter name: ");
         String name = scanner.nextLine();
 
@@ -161,20 +177,71 @@ public class Directory {
     }
 
     public Employee updateEmployee() {
-        scanner.nextLine();
-
-        System.out.println("Which employee do you want to update? (Email): ");
+        System.out.println("Which employee do you want to update? (Email) ");
         employee = employeeDAO.getEmployee(scanner.nextLine());
         System.out.println("Leave input blank to skip edit");
+
         System.out.println("Enter new name: ");
         employee.setName(scanner.nextLine());
+
         System.out.println("Enter new password: ");
         employee.setPassword(scanner.nextLine());
+
         System.out.println("Enter new role: ");
         String role = scanner.nextLine();
         workRole = workRoleDAO.getRole(role);
         employee.setWorkRole(workRole);
 
         return employee;
+    }
+
+    public WorkRole createWorkRole() {
+        System.out.println("Enter title: ");
+        String title = scanner.nextLine();
+
+        System.out.println("Enter description: ");
+        String description = scanner.nextLine();
+
+        System.out.println("Enter salary: ");
+        double salary = scanner.nextDouble();
+        scanner.nextLine(); // Consume newline character
+
+        System.out.println("Enter date: ");
+        String date = scanner.nextLine();
+
+        workRole = new WorkRole(title, description, salary, date);
+
+        return workRole;
+    }
+
+    public WorkRole updateWorkRole() {
+        System.out.println("Which role do you want to update? (Title) ");
+        workTitle = scanner.nextLine();
+        workRole = workRoleDAO.getRole(workTitle);
+        System.out.println("Leave input blank to skip edit");
+
+        System.out.println("Enter new title: ");
+        workRole.setTitle(scanner.nextLine());
+
+        System.out.println("Enter new description: ");
+        workRole.setDescription(scanner.nextLine());
+
+        System.out.println("Enter new salary: ");
+        String input = scanner.nextLine();
+        double salary;
+
+        if (input.isEmpty()) {
+            salary = 0;
+        } else {
+            try {
+                salary = Double.parseDouble(input);
+            } catch (NumberFormatException e) {
+                LoggerUtil.logError("Error parsing salary", e);
+                salary = 0;
+            }
+        }
+        workRole.setSalary(salary);
+
+        return workRole;
     }
 }

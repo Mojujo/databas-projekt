@@ -7,6 +7,7 @@ import utility.PasswordUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 
 public class EmployeeService {
@@ -58,7 +59,7 @@ public class EmployeeService {
                 existingEmployee.setPassword(PasswordUtil.hashPassword(employee.getPassword()));
             }
 
-            if (!Objects.equals(employee.getWorkRole().getTitle(), "")) {
+            if (employee.getWorkRole() != null) {
                 existingEmployee.setWorkRole(employee.getWorkRole());
             }
 
@@ -92,6 +93,13 @@ public class EmployeeService {
                                 ", Title= " + employee.getWorkRole().getTitle() +
                                 ", Salary= " + employee.getWorkRole().getSalary() + "]");
             }
+        }
+    }
+
+    public void listAllEmployees() {
+        List<Employee> employees = employeeDAO.getEmployees();
+        for (Employee employee : employees) {
+            System.out.println(employee + "\n");
         }
     }
 }
