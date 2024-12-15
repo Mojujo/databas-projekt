@@ -8,7 +8,7 @@ public class WorkRole {
     private String title;
     private String description;
     private double salary;
-    private Date creationDate;
+    private final Date creationDate;
 
     public WorkRole(int roleId, String title, String description, double salary, Date creationDate) {
         this.roleId = roleId;
@@ -57,10 +57,6 @@ public class WorkRole {
         this.salary = salary;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,6 +72,6 @@ public class WorkRole {
 
     @Override
     public String toString() {
-        return "\n" + "[" + "RoleId=" + roleId + ", Title= " + title + ", Description= " + description + ", Salary= " + salary + ", Creation-Date= " + creationDate + "]";
+        return "[" + "RoleId=" + roleId + ", Title= " + title + ", Description= " + description + ", Salary= " + salary + ", Creation-Date= " + creationDate + "]";
     }
 }

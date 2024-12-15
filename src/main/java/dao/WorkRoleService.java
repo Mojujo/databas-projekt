@@ -81,7 +81,7 @@ public class WorkRoleService {
     public void findWorkRole(String title, Employee user) {
         WorkRole workRole = workRoleDAO.getRole(title);
         if (workRole != null) {
-            if (user.getWorkRole().getTitle().equals("Admin")) {
+            if (user.getWorkRole().getRoleId() == 0) {
                 System.out.println("Admin user, showing all information");
                 System.out.println(workRole);
             } else {
@@ -97,7 +97,7 @@ public class WorkRoleService {
     public void listAllWorkRoles() {
         List<WorkRole> workRoles = workRoleDAO.getRoles();
         for (WorkRole workRole : workRoles) {
-            System.out.println(workRole + "\n");
+            System.out.println(workRole);
         }
     }
 }

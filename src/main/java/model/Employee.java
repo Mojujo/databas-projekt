@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Employee {
     private int employeeId;
     private String name;
-    private String email;
+    private final String email;
     private String password;
     private WorkRole workRole;
 
@@ -48,10 +48,6 @@ public class Employee {
         this.name = name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -79,7 +75,7 @@ public class Employee {
         return "[" + "EmployeeId=" + employeeId +
                 ", Name= " + name +
                 ", Email= " + email +
-                ", Password= " + password + "]" +
-                 workRole;
+                ", Password= " + password + "]" + "\n" +
+                workRole;
     }
 }

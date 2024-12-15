@@ -60,7 +60,7 @@ public class Directory {
 
     private boolean options(Employee user) {
         if (menuEdit == null) {
-            if (user.getWorkRole().getTitle().equals("Admin")) {
+            if (user.getWorkRole().getRoleId() == 0) {
                 PrintUtil.optionPrintAdmin();
                 int choice = scanner.nextInt();
                 scanner.nextLine(); // Consume newline character

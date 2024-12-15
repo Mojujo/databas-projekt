@@ -83,7 +83,7 @@ public class EmployeeService {
     public void findEmployee(String email, Employee user) {
         Employee employee = employeeDAO.getEmployee(email);
         if (employee != null) {
-            if (user.getWorkRole().getTitle().equals("Admin")) {
+            if (user.getWorkRole().getRoleId() == 0) {
                 System.out.println("Admin user, showing all information");
                 System.out.println(employee);
             } else {
