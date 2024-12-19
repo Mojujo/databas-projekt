@@ -16,8 +16,9 @@ public class PrintUtil {
                 --------------------
                 1. Edit roles
                 2. Edit employees
-                3. Log out
-                4. Quit
+                3. View profile
+                4. Log out
+                5. Quit
                 --------------------
                 """);
     }

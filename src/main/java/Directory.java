@@ -74,11 +74,12 @@ public class Directory {
                         menuEdit = "employee";
                         System.out.println("Editing employees.");
                     }
-                    case 3 -> {
+                    case 3 -> employeeService.findEmployee(user.getEmail(), user);
+                    case 4 -> {
                         loggedIn = false;
                         return true; // Return to log in
                     }
-                    case 4 -> {
+                    case 5 -> {
                         return false; // Exit the application
                     }
                 }
